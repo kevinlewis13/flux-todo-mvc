@@ -80,9 +80,10 @@ var TodoActions = {
     });
   },
 
-  rotateCase: function() {
+  updateCase: function(id) {
     AppDispatcher.dispatch({
-      actionType: TodoConstants.TODO_ROTATE_CASE
+      actionType: TodoConstants.TODO_UPDATE_CASE,
+      id: id
     });
 
   }

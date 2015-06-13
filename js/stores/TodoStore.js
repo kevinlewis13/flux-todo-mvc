@@ -30,7 +30,8 @@ function create(text) {
   _todos[id] = {
     id: id,
     complete: false,
-    text: text
+    text: text,
+    textCase: null
   };
 }
 
@@ -76,8 +77,22 @@ function destroyCompleted() {
   }
 }
 
-function rotateCase() {
-  
+function updateCase(id) {
+  var todo = _todos[id];
+  if(!todo.textCase || todo.textCase === 'lower') {
+    todo.text = todo.text.toUpperCase();
+    todo.textCase = 'upper';
+  } else if (todo.textCase === 'upper') {
+      todo.text = todo.text.split(' ').map(function(word) {
+        return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+      }).join(' ');
+      todo.textCase = 'title';
+  } else {
+      todo.text = todo.text.toLowerCase();
+      todo.textCase = 'lower';
+  }
+
+  return todo;
 }
 
 var TodoStore = assign({}, EventEmitter.prototype, {
@@ -127,6 +142,7 @@ AppDispatcher.register(function(action) {
   var text;
 
   switch(action.actionType) {
+
     case TodoConstants.TODO_CREATE:
       text = action.text.trim();
       if (text !== '') {
@@ -172,8 +188,9 @@ AppDispatcher.register(function(action) {
       TodoStore.emitChange();
       break;
 
-    case TodoConstants.TODO_ROTATE_CASE:
-      rotateCase();
+    case TodoConstants.TODO_UPDATE_CASE:
+      var updated = updateCase(action.id);
+      update(action.id, {text: updated.text, textCase: updated.textCase});
       TodoStore.emitChange();
       break;
 
