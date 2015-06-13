@@ -270,6 +270,25 @@ label[for='toggle-all'] {
 	transition: all 0.2s;
 }
 
+#todo-list li .rotate {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 50px;
+	bottom: 0;
+	width: 50px;
+	height: 40px;
+	margin: auto 0;
+	font-size: 22px;
+	color: #a88a8a;
+	-webkit-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+#todo-list li .rotate:after {
+	content: 'case';
+}
+
 #todo-list li .destroy:hover {
 	text-shadow: 0 0 1px #000,
 				 0 0 10px rgba(199, 107, 107, 0.8);

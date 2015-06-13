@@ -76,6 +76,10 @@ function destroyCompleted() {
   }
 }
 
+function rotateCase() {
+  
+}
+
 var TodoStore = assign({}, EventEmitter.prototype, {
 
   /**
@@ -167,6 +171,12 @@ AppDispatcher.register(function(action) {
       destroyCompleted();
       TodoStore.emitChange();
       break;
+
+    case TodoConstants.TODO_ROTATE_CASE:
+      rotateCase();
+      TodoStore.emitChange();
+      break;
+
 
     default:
       // no op
